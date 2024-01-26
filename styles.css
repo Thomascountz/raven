@@ -1,0 +1,133 @@
+body {
+  background: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  margin: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#title {
+  color: #000000;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #007bff;
+}
+
+.button-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#generate-keys {
+  background: #ff0f0f;
+}
+
+#generate-keys:hover {
+  background: #8a0000;
+}
+
+#message,
+#decrypted-message {
+  width: calc(100% - 22px); /* Adjust for padding and borders */
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+#decrypted-message:focus {
+  outline: none !important;
+}
+
+/* Only display the relevant part of the URL */
+.url-container {
+  word-break: break-all;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.url-container span {
+  display: inline-block;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.copy-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Feedback message styles */
+.feedback-message {
+  display: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.feedback-message.success {
+  color: #28a745;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.feedback-message.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    margin: 20px auto;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}

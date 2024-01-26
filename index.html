@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Raven</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="title">Raven</h1>
+      <div id="key-info" class="url-container">
+        <span id="public-key-url">Your public key URL will appear here</span>
+        <span class="copy-icon" id="copy-public-key-url" title="Copy Public Key URL"></span>
+      </div>
+      <textarea rows="4" id="message" placeholder="Enter your message"></textarea>
+      <div class="button-container">
+        <button id="encrypt-message">Encrypt Message</button>
+        <button id="generate-keys">Revoke & Regenerate Keys</button>
+      </div>
+      <div id="encrypted-message-info" class="url-container" style="display: none">
+        <span id="encrypted-url">Encrypted message URL will appear here</span>
+        <span
+          class="copy-icon"
+          id="copy-encrypted-url"
+          title="Copy Encrypted Message URL"
+        ></span>
+      </div>
+      <div id="feedback" class="feedback-message"></div>
+      <div id="decrypted-message-container" style="display: none">
+        <textarea rows="4" id="decrypted-message" readonly></textarea>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
