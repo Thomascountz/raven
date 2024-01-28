@@ -33,9 +33,7 @@ async function handleEncryptedMessageFromUrl(elements) {
   const encryptedMessage = urlParams.get("encryptedMessage");
 
   if (encryptedMessage) {
-    elements.messageInput.style.display = "none";
-    elements.encryptMessageButton.style.display = "none";
-    elements.encryptedMessageContainer.display = "none";
+    elements.encryptedMessageContainer.style.display = "none";
     await decryptMessage(encryptedMessage, elements);
   }
 }

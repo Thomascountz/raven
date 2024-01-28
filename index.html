@@ -37,17 +37,18 @@
         >
         <button class="copy-button" id="copy-public-key-url">Copy</button>
       </div>
+      <div id="decrypted-message-container" style="display: none">
+        <h3>Incoming Message</h3>
+        <textarea rows="8" id="decrypted-message" readonly></textarea>
+      </div>
       <div id="message-container" style="display: none">
+        <h3>Your Message</h3>
         <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
         <button id="encrypt-message" class="form-button">Encrypt Message</button>
       </div>
       <div id="encrypted-message-container" class="url-container" style="display: none">
         <span id="encrypted-message-url" class="url-textbox"></span>
         <button class="copy-button" id="copy-encrypted-message-url">Copy</button>
-      </div>
-      <div id="decrypted-message-container" style="display: none">
-        <h3>Decrypted Message</h3>
-        <textarea rows="8" id="decrypted-message" readonly></textarea>
       </div>
     </div>
 
