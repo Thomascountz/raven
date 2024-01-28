@@ -8,13 +8,13 @@ async function initializeApp() {
 
   await checkAndDisplayKeys(elements);
   await handleEncryptedMessageFromUrl(elements);
+  await handlePublicKeyFromUrl(elements);
 }
 
 function getDomElements() {
   return {
+    messageContainer: document.getElementById("message-container"),
     encryptMessageButton: document.getElementById("encrypt-message"),
-    encryptedUrlElement: document.getElementById("encrypted-url"),
-    encryptedMessageContainer: document.getElementById("encrypted-message-info"),
     copyEncryptedMessageButton: document.getElementById("copy-encrypted-url"),
     messageInput: document.getElementById("message"),
     decryptedMessageElement: document.getElementById("decrypted-message"),
@@ -22,6 +22,7 @@ function getDomElements() {
     generateKeysButton: document.getElementById("generate-keys"),
     copyPublicKeyButton: document.getElementById("copy-public-key-url"),
     feedbackElement: document.getElementById("feedback"),
+    keyRegenerationWarning: document.getElementById("key-regeneration-warning"),
   };
 }
 
@@ -30,7 +31,18 @@ async function handleEncryptedMessageFromUrl(elements) {
   const encryptedMessage = urlParams.get("encryptedMessage");
 
   if (encryptedMessage) {
+    elements.messageInput.style.display = "none";
+    elements.encryptMessageButton.style.display = "none";
     await decryptMessage(encryptedMessage, elements);
+  }
+}
+
+async function handlePublicKeyFromUrl(elements) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const publicKey = urlParams.get("publicKey");
+
+  if (publicKey) {
+    elements.messageContainer.style.display = "block";
   }
 }
 
@@ -43,13 +55,6 @@ function attachEventListeners(elements) {
     copyToClipboard(
       elements.publicKeyElement.textContent,
       "Public key URL copied to clipboard.",
-      elements.feedbackElement,
-    ),
-  );
-  elements.copyEncryptedMessageButton.addEventListener("click", () =>
-    copyToClipboard(
-      elements.encryptedUrlElement.textContent,
-      "Encrypted message URL copied to clipboard.",
       elements.feedbackElement,
     ),
   );
@@ -80,34 +85,43 @@ async function encryptMessageHandler(elements) {
 
     // Convert encrypted data to Base64URL and create the link
     const base64URLEncryptedData = base64URLEncode(new Uint8Array(encryptedData));
-    elements.encryptedUrlElement.textContent = `${window.location.origin}${window.location.pathname}?encryptedMessage=${base64URLEncryptedData}`;
-    elements.encryptedMessageContainer.style.display = "block"; // Ensure this ID matches the one in the HTML
+    copyToClipboard(`${window.location.origin}${window.location.pathname}?encryptedMessage=${base64URLEncryptedData}`,"Encrypted message URL copied to clipboard.", elements.feedbackElement)
   } catch (e) {
-    showFeedback(elements.feedbackElement, "Encryption failed: " + e.message, false)
+    showFeedback(elements.feedbackElement, "Encryption failed: " + e.message, false);
   }
 }
 
 async function regenerateKeysHandler(elements) {
+  // Hide the human-centric alert if it's already visible
+  if (elements.keyRegenerationWarning.style.display == "block") {
+    elements.keyRegenerationWarning.style.display = "none";
+    return;
+  }
+
   // Check if keys exist
   const privateKeyExists = localStorage.getItem("privateKey");
   const publicKeyExists = localStorage.getItem("publicKey");
 
   if (privateKeyExists && publicKeyExists) {
-    // Confirm with the user before regenerating keys
-    const userConfirmed = confirm(
-      "Are you sure you want to generate new keys? This will invalidate your previous keys.",
-    );
+    // Display the human-centric alert to the user before regenerating keys
+    elements.keyRegenerationWarning.style.display = "block";
 
-    if (userConfirmed) {
+    // Event handler for the "I Understand, Continue" button
+    window.confirmKeyRegeneration = async () => {
+      // Hide the warning message
+      elements.keyRegenerationWarning.style.display = "none";
       // User confirmed, proceed to regenerate keys
       const newBase64URLPublicKey = await generateKeys();
       if (newBase64URLPublicKey) {
         updatePublicKeyURL(elements.publicKeyElement, newBase64URLPublicKey);
+        showFeedback(elements.feedbackElement, "Keys successfully regenerated!");
       }
-    } else {
-      // User canceled, do nothing
-      return;
-    }
+    };
+
+    // Event handler for the "Cancel" button
+    window.cancelKeyRegeneration = () => {
+      elements.keyRegenerationWarning.style.display = "none";
+    };
   } else {
     // No keys were found, generate without confirmation
     const newBase64URLPublicKey = await generateKeys();
@@ -125,9 +139,17 @@ function copyToClipboard(textToCopy, successMessage, feedbackElement) {
 }
 
 function showFeedback(feedbackElement, message, isSuccess = true) {
+  className = isSuccess ? "success" : "error";
+  feedbackElement.classList.add(className);
   feedbackElement.textContent = message;
-  feedbackElement.className = `feedback-message ${isSuccess ? "success" : "error"}`;
-  feedbackElement.style.display = "block";
+
+  // Show the toast
+  feedbackElement.classList.add("show");
+
+  // Hide the toast after 3 seconds
+  setTimeout(function () {
+    feedbackElement.classList.remove("success", "error", "show");
+  }, 3000);
 }
 
 // Base64URL encoding and decoding utility functions
@@ -224,7 +246,7 @@ async function decryptMessage(encryptedMessage, elements) {
   const base64URLPrivateKey = localStorage.getItem("privateKey");
 
   if (!base64URLPrivateKey) {
-    showFeedback(elements.feedbackElement, "No private key available for decryption", false)
+    showFeedback(elements.feedbackElement, "No private key available for decryption", false);
     return;
   }
 
@@ -247,7 +269,7 @@ async function decryptMessage(encryptedMessage, elements) {
     elements.decryptedMessageElement.textContent = dec.decode(decryptedData);
     document.getElementById("decrypted-message-container").style.display = "block";
   } catch (e) {
-    showFeedback(elements.feedbackElement, "Decryption Failed: ", false)
+    showFeedback(elements.feedbackElement, "Decryption Failed: ", false);
   }
 }
 

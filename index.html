@@ -8,25 +8,36 @@
   <body>
     <div class="container">
       <h1 id="title">Raven</h1>
+      <button id="generate-keys">⚠ Revoke & Regenerate Keys</button>
+      <div id="feedback" class="toast"></div>
+      <div id="key-regeneration-warning" class="human-centric-alert" role="alert" style="display: none">
+        <h2>Heads Up!</h2>
+        <p>
+          Revoking and regenerating your keys will permanently disable your current encryption
+          keys and create new ones. This means:
+        </p>
+        <ul>
+          <li>Any previous messages encrypted with your old keys won't be readable anymore.</li>
+          <li>
+            You'll need to share your new public key with others to receive encrypted messages.
+          </li>
+        </ul>
+        <p>Only proceed if you're sure you want to start fresh with a new set of keys.</p>
+        <button onclick="confirmKeyRegeneration()">I Understand, Continue</button>
+        <button onclick="cancelKeyRegeneration()">Cancel</button>
+      </div>
       <div id="key-info" class="url-container">
-        <span id="public-key-url">Your public key URL will appear here</span>
-        <span class="copy-icon" id="copy-public-key-url" title="Copy Public Key URL"></span>
+        <span id="public-key-url" class="url-textbox"
+          >Your public key URL will appear here</span
+        >
+        <button class="copy-button" id="copy-public-key-url">Copy</button>
       </div>
-      <textarea rows="4" id="message" placeholder="Enter your message"></textarea>
-      <div class="button-container">
-        <button id="encrypt-message">Encrypt Message</button>
-        <button id="generate-keys">Revoke & Regenerate Keys</button>
+      <div id="message-container" style="display: none">
+        <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
+        <button id="encrypt-message" class="form-button">Copy Encrypted URL</button>
       </div>
-      <div id="encrypted-message-info" class="url-container" style="display: none">
-        <span id="encrypted-url">Encrypted message URL will appear here</span>
-        <span
-          class="copy-icon"
-          id="copy-encrypted-url"
-          title="Copy Encrypted Message URL"
-        ></span>
-      </div>
-      <div id="feedback" class="feedback-message"></div>
       <div id="decrypted-message-container" style="display: none">
+        <h3>Decrypted Message</h3>
         <textarea rows="4" id="decrypted-message" readonly></textarea>
       </div>
     </div>
