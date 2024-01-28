@@ -1,9 +1,8 @@
 @font-face {
-    font-family: 'heavy_dataregular';
-    src: url('heavy_data-webfont.woff') format('woff'),
+  font-family: 'heavy_dataregular';
+  src: url('heavy_data-webfont.woff') format('woff'),
     font-weight: normal;
-    font-style: normal;
-
+  font-style: normal;
 }
 
 *,
@@ -88,7 +87,7 @@ textarea {
   font-family: "Fira Code", monospace;
   padding: 12px;
   margin: 20px 0;
-  /* border: 1px solid #e2e8f0; */
+  font-size: 16px;
   border: none;
   outline: none;
   border-radius: 8px;
@@ -140,7 +139,8 @@ textarea {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-#decrypted-message-container, #message-container {
+#decrypted-message-container,
+#message-container {
   /* background-color: #f1f1f1; */
   color: #fff;
   /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
@@ -150,9 +150,11 @@ textarea {
   /* font-family: "Fira Code", monospace; */
   font-size: 16px;
   font-weight: 500;
+  margin-bottom: 20px;
 }
 
-#decrypted-message-container h3, #message-container h3 {
+#decrypted-message-container h3,
+#message-container h3 {
   text-align: center;
   text-transform: uppercase;
 }

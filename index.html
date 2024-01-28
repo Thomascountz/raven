@@ -3,14 +3,19 @@
   <head>
     <title>Raven</title>
     <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   </head>
   <body>
     <div class="container">
       <h1 id="title">Raven</h1>
       <button id="generate-keys">⚠ Revoke & Regenerate Keys</button>
       <div id="feedback" class="toast"></div>
-      <div id="key-regeneration-warning" class="human-centric-alert" role="alert" style="display: none">
+      <div
+        id="key-regeneration-warning"
+        class="human-centric-alert"
+        role="alert"
+        style="display: none"
+      >
         <h2>Heads Up!</h2>
         <p>
           Revoking and regenerating your keys will permanently disable your current encryption
@@ -34,11 +39,15 @@
       </div>
       <div id="message-container" style="display: none">
         <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
-        <button id="encrypt-message" class="form-button">Copy Encrypted URL</button>
+        <button id="encrypt-message" class="form-button">Encrypt Message</button>
+      </div>
+      <div id="encrypted-message-container" class="url-container" style="display: none">
+        <span id="encrypted-message-url" class="url-textbox"></span>
+        <button class="copy-button" id="copy-encrypted-message-url">Copy</button>
       </div>
       <div id="decrypted-message-container" style="display: none">
         <h3>Decrypted Message</h3>
-        <textarea rows="4" id="decrypted-message" readonly></textarea>
+        <textarea rows="8" id="decrypted-message" readonly></textarea>
       </div>
     </div>
 

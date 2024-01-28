@@ -15,14 +15,16 @@ function getDomElements() {
   return {
     messageContainer: document.getElementById("message-container"),
     encryptMessageButton: document.getElementById("encrypt-message"),
-    copyEncryptedMessageButton: document.getElementById("copy-encrypted-url"),
     messageInput: document.getElementById("message"),
     decryptedMessageElement: document.getElementById("decrypted-message"),
     publicKeyElement: document.getElementById("public-key-url"),
     generateKeysButton: document.getElementById("generate-keys"),
     copyPublicKeyButton: document.getElementById("copy-public-key-url"),
+    copyEncryptedMessageButton: document.getElementById("copy-encrypted-message-url"),
+    encryptedMessageUrl: document.getElementById("encrypted-message-url"),
     feedbackElement: document.getElementById("feedback"),
     keyRegenerationWarning: document.getElementById("key-regeneration-warning"),
+    encryptedMessageContainer: document.getElementById("encrypted-message-container")
   };
 }
 
@@ -33,6 +35,7 @@ async function handleEncryptedMessageFromUrl(elements) {
   if (encryptedMessage) {
     elements.messageInput.style.display = "none";
     elements.encryptMessageButton.style.display = "none";
+    elements.encryptedMessageContainer.display = "none";
     await decryptMessage(encryptedMessage, elements);
   }
 }
@@ -55,6 +58,13 @@ function attachEventListeners(elements) {
     copyToClipboard(
       elements.publicKeyElement.textContent,
       "Public key URL copied to clipboard.",
+      elements.feedbackElement,
+    ),
+  );
+  elements.copyEncryptedMessageButton.addEventListener("click", () =>
+    copyToClipboard(
+      elements.encryptedMessageUrl.textContent,
+      "Encrypted message URL copied to clipboard.",
       elements.feedbackElement,
     ),
   );
@@ -85,7 +95,8 @@ async function encryptMessageHandler(elements) {
 
     // Convert encrypted data to Base64URL and create the link
     const base64URLEncryptedData = base64URLEncode(new Uint8Array(encryptedData));
-    copyToClipboard(`${window.location.origin}${window.location.pathname}?encryptedMessage=${base64URLEncryptedData}`,"Encrypted message URL copied to clipboard.", elements.feedbackElement)
+    elements.encryptedMessageUrl.textContent = `${window.location.origin}${window.location.pathname}?encryptedMessage=${base64URLEncryptedData}`
+    elements.encryptedMessageContainer.style.display = "flex";
   } catch (e) {
     showFeedback(elements.feedbackElement, "Encryption failed: " + e.message, false);
   }
