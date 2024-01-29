@@ -59,7 +59,7 @@ body {
   border-bottom-left-radius: 6px;
   overflow-x: auto;
   white-space: nowrap;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 .copy-button {
