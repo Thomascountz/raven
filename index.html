@@ -8,7 +8,7 @@
   <body>
     <div class="container">
       <h1 id="title">Raven</h1>
-      <button id="generate-keys">⚠ Revoke & Regenerate Keys</button>
+      <button type="button" id="generate-keys">⚠ Revoke & Regenerate Keys</button>
       <div id="feedback" class="toast"></div>
       <div
         id="key-regeneration-warning"
@@ -28,14 +28,14 @@
           </li>
         </ul>
         <p>Only proceed if you're sure you want to start fresh with a new set of keys.</p>
-        <button onclick="confirmKeyRegeneration()">I Understand, Continue</button>
-        <button onclick="cancelKeyRegeneration()">Cancel</button>
+        <button type="button" onclick="confirmKeyRegeneration()">I Understand, Continue</button>
+        <button type="button" onclick="cancelKeyRegeneration()">Cancel</button>
       </div>
       <div id="key-info" class="url-container">
         <span id="public-key-url" class="url-textbox"
           >Your public key URL will appear here</span
         >
-        <button class="copy-button" id="copy-public-key-url">Copy</button>
+        <button type="button" class="copy-button" id="copy-public-key-url">Copy</button>
       </div>
       <div id="decrypted-message-container" style="display: none">
         <h3>Incoming Message</h3>
@@ -44,11 +44,11 @@
       <div id="message-container" style="display: none">
         <h3>Your Message</h3>
         <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
-        <button id="encrypt-message" class="form-button">Encrypt Message</button>
+        <button type="button" id="encrypt-message" class="form-button">Encrypt Message</button>
       </div>
       <div id="encrypted-message-container" class="url-container" style="display: none">
         <span id="encrypted-message-url" class="url-textbox"></span>
-        <button class="copy-button" id="copy-encrypted-message-url">Copy</button>
+        <button type="button" class="copy-button" id="copy-encrypted-message-url">Copy</button>
       </div>
     </div>
 
