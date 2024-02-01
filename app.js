@@ -7,6 +7,7 @@ async function initializeApp() {
   attachEventListeners(elements);
 
   await checkAndDisplayKeys(elements);
+  await handleRequestFromUrl(elements);
   await handleEncryptedMessageFromUrl(elements);
   await handlePublicKeyFromUrl(elements);
 }
@@ -20,12 +21,24 @@ function getDomElements() {
     publicKeyElement: document.getElementById("public-key-url"),
     generateKeysButton: document.getElementById("generate-keys"),
     copyPublicKeyButton: document.getElementById("copy-public-key-url"),
+    decryptedMessageContainer: document.getElementById("decrypted-message-container"),
+    includePublicKeyCheckbox: document.getElementById("include-public-key"),
     copyEncryptedMessageButton: document.getElementById("copy-encrypted-message-url"),
     encryptedMessageUrl: document.getElementById("encrypted-message-url"),
     feedbackElement: document.getElementById("feedback"),
     keyRegenerationWarning: document.getElementById("key-regeneration-warning"),
-    encryptedMessageContainer: document.getElementById("encrypted-message-container")
+    encryptedMessageContainer: document.getElementById("encrypted-message-container"),
   };
+}
+
+async function handleRequestFromUrl(elements) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const keyRequest = urlParams.get("keyRequest");
+
+  if (keyRequest) {
+    elements.decryptedMessageElement.textContent = "==!CLEARTEXT!==\n\nTHE SENDER HAS REQUESTED YOUR PUBLIC KEY.\n\n==!CLEARTEXT!=="
+    elements.decryptedMessageContainer.style.display = "block";
+  }
 }
 
 async function handleEncryptedMessageFromUrl(elements) {
@@ -93,7 +106,18 @@ async function encryptMessageHandler(elements) {
 
     // Convert encrypted data to Base64URL and create the link
     const base64URLEncryptedData = base64URLEncode(new Uint8Array(encryptedData));
-    elements.encryptedMessageUrl.textContent = `${window.location.origin}${window.location.pathname}?encryptedMessage=${base64URLEncryptedData}`
+    let queryParams = `?encryptedMessage=${base64URLEncryptedData}`;
+
+    // If the "Include Public Key" checkbox is checked, append the public key
+    if (elements.includePublicKeyCheckbox.checked) {
+      window.console.log("HERE")
+      const currentUserPublicKey = localStorage.getItem("publicKey");
+      if (currentUserPublicKey) {
+        queryParams += `&publicKey=${currentUserPublicKey}`;
+      }
+    }
+
+    elements.encryptedMessageUrl.textContent = `${window.location.origin}${window.location.pathname}${queryParams}`;
     elements.encryptedMessageContainer.style.display = "flex";
   } catch (e) {
     showFeedback(elements.feedbackElement, "Encryption failed: " + e.message, false);
@@ -276,7 +300,7 @@ async function decryptMessage(encryptedMessage, elements) {
     // Convert decrypted data to a string and display it
     const dec = new TextDecoder();
     elements.decryptedMessageElement.textContent = dec.decode(decryptedData);
-    document.getElementById("decrypted-message-container").style.display = "block";
+    elements.decryptedMessageContainer.style.display = "block";
   } catch (e) {
     showFeedback(elements.feedbackElement, "Decryption Failed: ", false);
   }

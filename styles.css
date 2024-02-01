@@ -111,6 +111,22 @@ textarea {
   outline: none;
 }
 
+#include-public-key-container {
+  margin-bottom: 20px;
+}
+
+.include-public-key-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: "Fira Code", monospace;
+  color: white;
+}
+
+.include-public-key-checkbox {
+  margin-right: 10px;
+}
+
 #encrypt-message {
   font-family: "Fira Code", monospace;
   padding: 12px 25px;

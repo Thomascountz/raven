@@ -31,7 +31,7 @@
         <button type="button" onclick="confirmKeyRegeneration()">I Understand, Continue</button>
         <button type="button" onclick="cancelKeyRegeneration()">Cancel</button>
       </div>
-      <div id="key-info" class="url-container">
+      <div id="key-info" class="url-container" title="Your sharable public key URL">
         <span id="public-key-url" class="url-textbox"
           >Your public key URL will appear here</span
         >
@@ -44,6 +44,20 @@
       <div id="message-container" style="display: none">
         <h3>Your Message</h3>
         <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
+        <div
+          id="include-public-key-container"
+          title="Enable this option to append your public key to the encrypted message URL, allowing recipients to easily reply to your message"
+        >
+          <label for="include-public-key" class="include-public-key-label">
+            <input
+              type="checkbox"
+              id="include-public-key"
+              name="include-public-key"
+              class="include-public-key-checkbox"
+            />
+            Include Public Key
+          </label>
+        </div>
         <button type="button" id="encrypt-message" class="form-button">Encrypt Message</button>
       </div>
       <div id="encrypted-message-container" class="url-container" style="display: none">
