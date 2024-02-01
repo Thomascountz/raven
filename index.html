@@ -43,7 +43,8 @@
       </div>
       <div id="message-container" style="display: none">
         <h3>Your Message</h3>
-        <textarea rows="8" id="message" placeholder="Enter your message"></textarea>
+        <textarea rows="8" id="message" maxlength="190" placeholder="Enter your message"></textarea>
+        <div id="char-count">0/190</div>
         <div
           id="include-public-key-container"
           title="Enable this option to append your public key to the encrypted message URL, allowing recipients to easily reply to your message"

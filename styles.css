@@ -123,6 +123,14 @@ textarea {
   color: white;
 }
 
+#char-count {
+  font-family: "Fira Code", monospace;
+  color: #718096;
+  font-size: 0.8em;
+  margin-top: 4px;
+  text-align: right;
+}
+
 .include-public-key-checkbox {
   margin-right: 10px;
 }

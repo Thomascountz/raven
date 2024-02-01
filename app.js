@@ -23,6 +23,7 @@ function getDomElements() {
     copyPublicKeyButton: document.getElementById("copy-public-key-url"),
     decryptedMessageContainer: document.getElementById("decrypted-message-container"),
     includePublicKeyCheckbox: document.getElementById("include-public-key"),
+    characterCounter: document.getElementById("char-count"),
     copyEncryptedMessageButton: document.getElementById("copy-encrypted-message-url"),
     encryptedMessageUrl: document.getElementById("encrypted-message-url"),
     feedbackElement: document.getElementById("feedback"),
@@ -36,7 +37,8 @@ async function handleRequestFromUrl(elements) {
   const keyRequest = urlParams.get("keyRequest");
 
   if (keyRequest) {
-    elements.decryptedMessageElement.textContent = "==!CLEARTEXT!==\n\nTHE SENDER HAS REQUESTED YOUR PUBLIC KEY.\n\n==!CLEARTEXT!=="
+    elements.decryptedMessageElement.textContent =
+      "==!CLEARTEXT!==\n\nTHE SENDER HAS REQUESTED YOUR PUBLIC KEY.\n\n==!CLEARTEXT!==";
     elements.decryptedMessageContainer.style.display = "block";
   }
 }
@@ -61,6 +63,10 @@ async function handlePublicKeyFromUrl(elements) {
 }
 
 function attachEventListeners(elements) {
+  elements.messageInput.addEventListener("input", () => {
+    const currentLength = elements.messageInput.value.length;
+    elements.characterCounter.textContent = `${currentLength}/190`;
+  });
   elements.encryptMessageButton.addEventListener("click", () =>
     encryptMessageHandler(elements),
   );
@@ -110,7 +116,7 @@ async function encryptMessageHandler(elements) {
 
     // If the "Include Public Key" checkbox is checked, append the public key
     if (elements.includePublicKeyCheckbox.checked) {
-      window.console.log("HERE")
+      window.console.log("HERE");
       const currentUserPublicKey = localStorage.getItem("publicKey");
       if (currentUserPublicKey) {
         queryParams += `&publicKey=${currentUserPublicKey}`;
