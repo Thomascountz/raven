@@ -38,7 +38,7 @@ async function handleRequestFromUrl(elements) {
 
   if (keyRequest) {
     elements.decryptedMessageElement.textContent =
-      "==!CLEARTEXT!==\n\nTHE SENDER HAS REQUESTED YOUR PUBLIC KEY.\n\n==!CLEARTEXT!==";
+      "==!CLEARTEXT!==\n\nTHE SENDER HAS REQUESTED YOUR PUBLIC KEY.\n\n\n\nYou must copy and share your public key URL with others so that they can send you an encrypted message.\n\n==!CLEARTEXT!==";
     elements.decryptedMessageContainer.style.display = "block";
   }
 }
@@ -116,7 +116,7 @@ async function encryptMessageHandler(elements) {
 
     // If the "Include Public Key" checkbox is checked, append the public key
     if (elements.includePublicKeyCheckbox.checked) {
-      window.console.log("HERE");
+      window.console.log("follow the white rabbit");
       const currentUserPublicKey = localStorage.getItem("publicKey");
       if (currentUserPublicKey) {
         queryParams += `&publicKey=${currentUserPublicKey}`;
@@ -131,7 +131,6 @@ async function encryptMessageHandler(elements) {
 }
 
 async function regenerateKeysHandler(elements) {
-  // Hide the human-centric alert if it's already visible
   if (elements.keyRegenerationWarning.style.display == "block") {
     elements.keyRegenerationWarning.style.display = "none";
     return;
